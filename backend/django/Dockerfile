@@ -5,10 +5,10 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 COPY ping-pang-pong .
-COPY tools/init_docker.sh /tmp/
+COPY tools/docker-entrypoint.sh /tmp/
 
 RUN pip3 install -r requirements.txt
 
-ENTRYPOINT [ "/bin/sh", "/tmp/init_docker.sh" ]
+ENTRYPOINT [ "/bin/sh", "/tmp/docker-entrypoint.sh" ]
 
 CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]

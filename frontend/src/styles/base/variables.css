@@ -1,0 +1,75 @@
+:root {
+  --color-main: rgba(60, 76, 85, 1);
+  --color-main-05: rgba(60, 76, 85, 0.05);
+  --color-main-10: rgba(60, 76, 85, 0.1);
+  --color-main-15: rgba(60, 76, 85, 0.15);
+  --color-main-20: rgba(60, 76, 85, 0.2);
+  --color-main-25: rgba(60, 76, 85, 0.25);
+  --color-main-30: rgba(60, 76, 85, 0.3);
+  --color-main-35: rgba(60, 76, 85, 0.35);
+  --color-main-40: rgba(60, 76, 85, 0.4);
+  --color-main-45: rgba(60, 76, 85, 0.45);
+  --color-main-50: rgba(60, 76, 85, 0.5);
+  --color-main-55: rgba(60, 76, 85, 0.55);
+  --color-main-60: rgba(60, 76, 85, 0.6);
+  --color-main-65: rgba(60, 76, 85, 0.65);
+  --color-main-70: rgba(60, 76, 85, 0.7);
+  --color-main-75: rgba(60, 76, 85, 0.75);
+  --color-main-80: rgba(60, 76, 85, 0.8);
+  --color-main-85: rgba(60, 76, 85, 0.85);
+  --color-main-90: rgba(60, 76, 85, 0.9);
+  --color-main-95: rgba(60, 76, 85, 0.95);
+
+  --color-bg: white;
+  --color-text: black;
+
+  --color-black: black;
+  --color-black-00: rgba(0, 0, 0, 0);
+  --color-black-20: rgba(0, 0, 0, 0.2);
+  --color-black-40: rgba(0, 0, 0, 0.4);
+  --color-black-60: rgba(0, 0, 0, 0.6);
+  --color-black-80: rgba(0, 0, 0, 0.8);
+
+  --font-thin: 100;
+  --font-extralight: 200;
+  --font-light: 300;
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+  --font-black: 900;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-main: rgba(255, 255, 255, 1);
+    --color-main-05: rgba(255, 255, 255, 0.05);
+    --color-main-10: rgba(255, 255, 255, 0.1);
+    --color-main-15: rgba(255, 255, 255, 0.15);
+    --color-main-20: rgba(255, 255, 255, 0.2);
+    --color-main-25: rgba(255, 255, 255, 0.25);
+    --color-main-30: rgba(255, 255, 255, 0.3);
+    --color-main-35: rgba(255, 255, 255, 0.35);
+    --color-main-40: rgba(255, 255, 255, 0.4);
+    --color-main-45: rgba(255, 255, 255, 0.45);
+    --color-main-50: rgba(255, 255, 255, 0.5);
+    --color-main-55: rgba(255, 255, 255, 0.55);
+    --color-main-60: rgba(255, 255, 255, 0.6);
+    --color-main-65: rgba(255, 255, 255, 0.65);
+    --color-main-70: rgba(255, 255, 255, 0.7);
+    --color-main-75: rgba(255, 255, 255, 0.75);
+    --color-main-80: rgba(255, 255, 255, 0.8);
+    --color-main-85: rgba(255, 255, 255, 0.85);
+    --color-main-90: rgba(255, 255, 255, 0.9);
+    --color-main-95: rgba(255, 255, 255, 0.95);
+
+    --color-bg: rgba(60, 76, 85, 1);
+    --color-text: white;
+  }
+}
+
+.material-symbols-rounded {
+  color: var(--color-main);
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+}

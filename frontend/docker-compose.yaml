@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  django:
+    image: two-three-four-five/ft_transcendence
+    container_name: ft_transcendence
+    build: .
+    ports:
+      - "8000:80"
+    restart: always

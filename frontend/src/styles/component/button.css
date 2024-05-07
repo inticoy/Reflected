@@ -1,0 +1,13 @@
+.button {
+  border-radius: 8px;
+  transition: 0.5s;
+}
+
+.button:hover {
+  background-color: var(--color-main-15);
+}
+
+.button:active {
+  background-color: var(--color-main-30);
+  transition: 0s;
+}

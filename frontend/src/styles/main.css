@@ -41,7 +41,11 @@
 body {
   min-height: 100vh;
   height: 100%;
-  background: radial-gradient(farthest-corner at 50% 30%, #b8bec1, #3a4b55);
+  /* background: radial-gradient(farthest-corner at 50% 30%, #b8bec1, #3a4b55); */
+  background-image: url(/asset/image/NEON.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
 }
 
 .navbar {

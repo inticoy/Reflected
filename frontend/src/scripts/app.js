@@ -1,6 +1,7 @@
 // import { showErrorPage404 } from "./view/errorPage.js";
 import { showHome } from "./view/home.js";
 import { showLogin } from "./view/login.js";
+import { getHostname, getDjangoPort } from "./utils/var.js";
 
 window.onload = function () {
   const hash = window.location.hash.substr(1);
@@ -22,7 +23,8 @@ window.onload = function () {
   }
 
   if (accessToken == null) accessToken = localStorage.getItem("accessToken");
-  const url = "http://10.13.1.7:8000/v1/users/test";
+  const url =
+    "http://" + getHostname() + ":" + getDjangoPort() + "/v1/users/test";
   fetch(url, {
     method: "GET",
     headers: {

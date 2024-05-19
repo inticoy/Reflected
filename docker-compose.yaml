@@ -2,16 +2,31 @@ version: "3.8"
 
 networks:
   transcendence:
+
 services:
+  nginx:
+    image: 2345/nginx
+    container_name: 2345-nginx
+    build: frontend
+    ports:
+      - "2345:80"
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - django
+
   django:
     image: 2345/django
     container_name: 2345-django
     build: backend/django
     ports:
-      - "8000:8000"
+      - "2344:8000"
     restart: always
-    networks:
-      - transcendence
+    env_file:
+      - .env
+    # networks:
+    #   - transcendence
     # depends_on:
     #   - postgres
   # postgres:
@@ -26,6 +41,6 @@ services:
   #     - .env
   #   networks:
   #     - transcendence
-volumes:
-  ts_db:
-    name: ts_db
+# volumes:
+#   ts_db:
+#     name: ts_db

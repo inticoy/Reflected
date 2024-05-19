@@ -10,11 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import os
 from pathlib import Path
+
+HOSTNAME = os.getenv("HOSTNAME", "localhost")
+NGINX_PORT = os.getenv("NGINX_PORT", "2345")
+DJANGO_PORT = os.getenv("DJANGO_PORT", "2344")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -144,16 +148,14 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = "user.User"
 
 CORS_ORIGIN_WHITELIST = [
-    "http://127.0.0.1:8001",
-    "http://localhost:8001",
-    "http://10.13.1.7:8001",
+    "http://" + HOSTNAME + ":" + NGINX_PORT,
 ]
 CORS_ALLOW_CREDENTIALS = True
 
 
 SIMPLE_JWT = {
     "AUTH_COOKIE": "access",  # Cookie name. Enables cookies if value is set.
-    "AUTH_COOKIE_DOMAIN": "http://localhost:8001",  # A string like "example.com", or None for standard domain cookie.
+    # "AUTH_COOKIE_DOMAIN": "http://localhost:8001",  # A string like "example.com", or None for standard domain cookie.
     "AUTH_COOKIE_SECURE": False,  # Whether the auth cookies should be secure (https:// only).
     "AUTH_COOKIE_HTTP_ONLY": True,  # Http only cookie flag.It's not fetch by javascript.
     "AUTH_COOKIE_PATH": "/",  # The path of the auth cookie.

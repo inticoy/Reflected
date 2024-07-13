@@ -1,5 +1,6 @@
 import { navigateTo } from "/src/scripts/utils/display.js";
 import { getAccessToken, login } from "/src/scripts/view/login.js";
+import { loadNotifications } from "/src/scripts/view/navbar/notifications.js";
 
 function setLogout() {
   document
@@ -180,6 +181,7 @@ export function setNavbar() {
   setLogout();
   setBack();
   setMenuOffcanvas();
+  loadNotifications();
   loadFriend();
   loadFriendRequest();
 

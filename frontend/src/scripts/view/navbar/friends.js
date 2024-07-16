@@ -1,4 +1,8 @@
 import { getAPI, postAPI } from "/src/scripts/utils/fetch.js";
+import { showToast } from "/src/scripts/utils/toast.js";
+import { HTTPCODE } from "/src/scripts/utils/var.js";
+
+let friendsData = [];
 
 export function setFriends() {
   const friendsList = document.getElementById("nav-friend-btn");
@@ -6,45 +10,103 @@ export function setFriends() {
 }
 
 export function setAddFriend() {
+  let addFriendModal = new bootstrap.Modal(
+    document.getElementById("modal-friend-request"),
+    {
+      backdrop: false,
+    }
+  );
+
+  let friendOffcanvas = new bootstrap.Offcanvas(
+    document.getElementById("offcanvas-friends")
+  );
+
   const friendRequest = document.getElementById("friends-add");
   friendRequest.addEventListener("click", function () {
-    var addFriendModal = new bootstrap.Modal(
-      document.getElementById("addFriendModal"),
-      {
-        backdrop: false, // 백드롭 비활성화
-      }
-    );
     addFriendModal.show();
   });
 
-  const submitFriendRequest = document.getElementById("submitAddFriend");
-  submitFriendRequest.addEventListener("click", async function () {
-    var friendNickname = document.getElementById("friendNickname").value;
+  const friendRequestSubmitButton = document.getElementById(
+    "friend-request-submit-button"
+  );
 
-    const friendRequestSuccess = await postAPI("v1/friends/requests", {
+  const friendNicknameInput = document.getElementById(
+    "friend-request-nickname-input"
+  );
+  friendRequestSubmitButton.addEventListener("click", async function () {
+    var friendNickname = friendNicknameInput.value;
+
+    if (!friendNickname) {
+      alert("닉네임을 입력하십시오.");
+      return;
+    }
+
+    const response = await postAPI("v1/friends/requests", {
       nickname: friendNickname,
     });
-    if (friendRequestSuccess) {
-      alert("Friend added successfully!");
-    } else {
-      alert("There was a problem with your request");
+    switch (response.status) {
+      case HTTPCODE.OK:
+      case HTTPCODE.CREATED:
+        showToast(
+          "check",
+          "green",
+          `${friendNickname}님에게 친구 신청을 성공했습니다.`
+        );
+        break;
+      case HTTPCODE.BAD_REQUEST:
+        showToast("close", "yellow", `${friendNickname}님과 이미 친구입니다.`);
+        break;
+      case HTTPCODE.NOT_FOUND:
+        showToast(
+          "close",
+          "yellow",
+          `${friendNickname}님은 존재하지 않습니다.`
+        );
+        break;
+      case HTTPCODE.CONFLICT:
+        showToast(
+          "close",
+          "yellow",
+          `${friendNickname}님에게 이미 친구 신청을 했습니다.`
+        );
+        break;
+      default:
+        showToast(
+          "close",
+          "red",
+          `${friendNickname}님에게 친구 신청을 실패했습니다.`
+        );
+        break;
     }
     addFriendModal.hide();
+    friendOffcanvas.hide();
+  });
+
+  friendNicknameInput.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
   });
 }
 
-let friendsData = [];
-
 export async function updateFriends() {
-  const data = await getAPI("v1/friends/");
-  if (data) {
-    friendsData = data;
-    displayFriends(data);
+  let response = await getAPI("v1/friends/");
+  if (!response.ok) {
+    /* TODO: error handling */
+    return;
   }
+  let data = await response.json();
+  friendsData = data;
+  displayFriends(data);
 }
 
 export async function updateFriendRequests() {
-  const data = await getAPI("v1/friends/requests");
+  let response = await getAPI("v1/friends/requests");
+  if (!response.ok) {
+    /* TODO: error handling */
+    return;
+  }
+  let data = await response.json();
   if (data) {
     const friendRequestList = document.getElementById(
       "offcanvas-friends-requests-list"
@@ -81,11 +143,12 @@ export async function updateFriendRequests() {
   }
 }
 
+const friendNicknameSearchInput = document.getElementById(
+  "friend-nickname-search-input"
+);
+
 document.addEventListener("DOMContentLoaded", () => {
-  const searchInput = document.querySelector(
-    '.form-control[placeholder="Search"]'
-  );
-  searchInput.addEventListener("input", filterFriends);
+  friendNicknameSearchInput.addEventListener("input", filterFriends);
 });
 
 function filterFriends(event) {

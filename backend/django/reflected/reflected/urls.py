@@ -18,11 +18,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from friend.urls import FriendRouter
+from chat.urls import ChatRouter, ChatRoomRouter
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("v1/auth/", include("auth.urls")),
+    path("v1/chats/", include(ChatRouter.urls)),
+    path("v1/chatrooms/", include(ChatRoomRouter.urls)),
     path("v1/friends/", include(FriendRouter.urls)),
     path("v1/notifications/", include("notification.urls")),
     path("v1/users/", include("user.urls")),

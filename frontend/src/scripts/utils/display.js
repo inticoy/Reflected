@@ -5,11 +5,21 @@ const navBackBtn = document.getElementById("nav-back-btn");
 const apps = document.querySelectorAll(".container-app");
 
 HTMLElement.prototype.show = function () {
-  this.classList.replace("d-none", "d-block");
+  if (this.classList.contains("d-none-flex")) {
+    this.classList.replace("d-none", "d-flex");
+    this.classList.remove("d-none-flex");
+  } else {
+    this.classList.replace("d-none", "d-block");
+  }
 };
 
 HTMLElement.prototype.hide = function () {
-  this.classList.replace("d-block", "d-none");
+  if (this.classList.contains("d-flex")) {
+    this.classList.replace("d-flex", "d-none");
+    this.classList.add("d-none-flex");
+  } else {
+    this.classList.replace("d-block", "d-none");
+  }
 };
 
 function hideApps() {

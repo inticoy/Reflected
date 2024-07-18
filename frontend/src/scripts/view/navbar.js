@@ -4,11 +4,16 @@ import {
   setAddFriend,
   updateFriendRequests,
 } from "/src/scripts/view/navbar/friends/friendRequests.js";
+import {
+  setChatrooms,
+  updateChatrooms,
+} from "/src/scripts/view/navbar/chats.js";
 
 export function setNavbar() {
   setLogout();
   setBack();
   setFriends();
+  setChatrooms();
 }
 
 function setLogout() {
@@ -32,4 +37,5 @@ export function updateNavbar() {
   updateNotifications();
   updateFriends();
   updateFriendRequests();
+  updateChatrooms();
 }

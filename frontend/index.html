@@ -310,75 +310,76 @@
                 <span class="material-symbols-rounded"> close </span>
               </div>
             </div>
-            <div class="offcanvas-body px-3 py-0 d-flex flex-column gap-1">
+            <div
+              id="chatrooms-list"
+              class="offcanvas-body px-3 py-0 d-flex flex-column gap-1"
+            ></div>
+            <div
+              id="chatroom"
+              class="offcanvas-body px-3 py-0 d-flex flex-column justify-content-between"
+            >
+              <div id="chats-list" class="d-flex flex-column gap-1">
+                <div class="chat-message-me d-flex px-3 py-2">
+                  <div class="d-inline-flex flex-column gap-2">
+                    <div class="chat-message-box px-3 py-3">
+                      <span class="medium">Hello, nice to meet you.</span>
+                    </div>
+                    <span class="small chat-timestamp">00:00</span>
+                  </div>
+                </div>
+                <div class="chat-message-other d-flex px-3 py-2">
+                  <div class="d-inline-flex flex-column gap-2">
+                    <div class="chat-message-box px-3 py-3">
+                      <span class="medium">Hello, nice to meet you.</span>
+                    </div>
+                    <span class="small chat-timestamp">00:00</span>
+                  </div>
+                </div>
+                <div class="chat-message-other d-flex px-3 py-2">
+                  <div class="d-inline-flex flex-column gap-2">
+                    <div class="chat-message-box px-3 py-3">
+                      <span class="medium">Hello, nice to meet you.</span>
+                    </div>
+                    <span class="small chat-timestamp">00:00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              id="chatroom-bottom"
+              class="d-flex flex-column px-3 pt-0 pb-4 gap-0"
+            >
               <div
-                id="chatrooms-list"
-                class="d-flex flex-column justify-content-center align-items-center gap-1"
-              ></div>
-              <div
-                id="chatroom"
-                class="h-100 px-3 py-0 d-flex flex-column justify-content-between"
+                class="utilbar py-2 px-3 d-flex flex-row gap-3 justify-content-end"
               >
-                <div id="chats-list" class="d-flex flex-column gap-1">
-                  <div class="chat-message-me d-flex px-3 py-2">
-                    <div class="d-inline-flex flex-column gap-2">
-                      <div class="chat-message-box px-3 py-3">
-                        <span class="medium">Hello, nice to meet you.</span>
-                      </div>
-                      <span class="small chat-timestamp">00:00</span>
-                    </div>
-                  </div>
-                  <div class="chat-message-other d-flex px-3 py-2">
-                    <div class="d-inline-flex flex-column gap-2">
-                      <div class="chat-message-box px-3 py-3">
-                        <span class="medium">Hello, nice to meet you.</span>
-                      </div>
-                      <span class="small chat-timestamp">00:00</span>
-                    </div>
-                  </div>
-                  <div class="chat-message-other d-flex px-3 py-2">
-                    <div class="d-inline-flex flex-column gap-2">
-                      <div class="chat-message-box px-3 py-3">
-                        <span class="medium">Hello, nice to meet you.</span>
-                      </div>
-                      <span class="small chat-timestamp">00:00</span>
-                    </div>
-                  </div>
+                <div
+                  type="button"
+                  class="btn-navbar rounded-circle p-0 d-flex flex-row align-items-center justify-content-center"
+                >
+                  <span class="material-symbols-rounded">
+                    videogame_asset
+                  </span>
                 </div>
-                <div class="chatting-bottom-bar pb-4 pt-3">
-                  <div
-                    class="utilbar py-2 d-flex flex-row gap-3 justify-content-end"
-                  >
-                    <div
-                      type="button"
-                      class="btn-navbar rounded-circle p-0 d-flex flex-row align-items-center justify-content-center"
-                    >
-                      <span class="material-symbols-rounded">
-                        videogame_asset
-                      </span>
-                    </div>
-                    <div
-                      type="button"
-                      class="btn-navbar rounded-circle p-0 d-flex flex-row align-items-center justify-content-center"
-                    >
-                      <span class="material-symbols-rounded"> info </span>
-                    </div>
-                  </div>
-                  <input
-                    id="chatting-input"
-                    type="text"
-                    class="border-radius-32 form-control ps-4 py-3"
-                    placeholder="Type..."
-                    aria-label="ChatInput"
-                    aria-describedby="basic-addon1"
-                  />
-                  <div
-                    id="btn-sendchat"
-                    class="btn-navbar rounded-circle p-0 d-flex flex-row align-items-center justify-content-center"
-                  >
-                    <span class="material-symbols-rounded"> send </span>
-                  </div>
+                <div
+                  type="button"
+                  class="btn-navbar rounded-circle p-0 d-flex flex-row align-items-center justify-content-center"
+                >
+                  <span class="material-symbols-rounded"> info </span>
                 </div>
+              </div>
+              <input
+                id="chatting-input"
+                type="text"
+                class="border-radius-32 form-control ps-4 py-3"
+                placeholder="Type..."
+                aria-label="ChatInput"
+                aria-describedby="basic-addon1"
+              />
+              <div
+                id="btn-sendchat"
+                class="btn-navbar rounded-circle d-flex flex-row align-items-center justify-content-center"
+              >
+                <span class="material-symbols-rounded"> send </span>
               </div>
             </div>
           </div>

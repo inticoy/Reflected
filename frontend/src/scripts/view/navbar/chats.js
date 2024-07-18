@@ -8,8 +8,10 @@ export function setChatrooms() {
 export async function updateChatrooms() {
   const chatroomList = document.getElementById("chatrooms-list");
   const chatroom = document.getElementById("chatroom");
+  const chatroomBottom = document.getElementById("chatroom-bottom");
   chatroomList.show();
   chatroom.hide();
+  chatroomBottom.hide();
 
   let response = await getAPI("v1/chatrooms/");
   if (!response.ok) {
@@ -58,6 +60,7 @@ export async function updateChatrooms() {
       .addEventListener("click", async () => {
         chatroomList.hide();
         chatroom.show();
+        chatroomBottom.show();
       });
   }
 }

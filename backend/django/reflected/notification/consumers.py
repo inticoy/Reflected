@@ -9,10 +9,10 @@ class NotificationConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.user = self.scope["user"]
         if self.user.is_authenticated:
-            self.group_name = f"user_{self.user.id}"
+            self.group_name = f"notification_user_{self.user.id}"
             await self.channel_layer.group_add(self.group_name, self.channel_name)
             await self.accept()
-            logger.info(f"WebSocket connected: {self.user.nickname}")
+            logger.info(f"WebSocket connected for notification: {self.user.nickname}")
         else:
             logger.warning("WebSocket connection rejected due to unauthenticated user")
             await self.close()

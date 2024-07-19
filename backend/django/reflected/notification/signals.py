@@ -22,7 +22,7 @@ def send_notification(sender, instance, created, **kwargs):
     if created:
         channel_layer = get_channel_layer()
         async_to_sync(channel_layer.group_send)(
-            f"user_{instance.to_user.id}",
+            f"notification_user_{instance.to_user.id}",
             {
                 "type": "send_notification",
                 "notification_type": f"{instance.type}",

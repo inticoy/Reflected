@@ -58,13 +58,13 @@ export async function updateChatroom(chatroomId) {
   const accessToken = localStorage.getItem("accessToken");
 
   const wsScheme = window.location.protocol === "https:" ? "wss" : "ws";
-  const wsUrl = `${wsScheme}://localhost:2344/ws/chats/?token=${accessToken}&chatroom_id=${chatroomId}`;
+  const wsUrl = `${wsScheme}://localhost:2344/ws/chats/?token=${accessToken}`;
   const socket = new WebSocket(wsUrl);
 
   socket.onmessage = function (event) {
     const data = JSON.parse(event.data);
     console.log("new message");
-    updateNewChats();
+    console.log(data);
   };
 
   socket.onclose = function (event) {
@@ -79,10 +79,6 @@ export async function updateChatroom(chatroomId) {
     console.error("WebSocket error observed:", event);
   };
 }
-
-export function setChatroomWebSocket(chatroomId) {}
-
-async function updateNewChats() {}
 
 async function sendChat(chatroomId, message) {
   let response = await postAPI("v1/chats/", {

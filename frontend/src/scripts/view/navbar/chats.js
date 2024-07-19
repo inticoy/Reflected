@@ -1,5 +1,8 @@
 import { getAPI } from "/src/scripts/utils/fetch.js";
-import { updateChatroom } from "/src/scripts/view/navbar/chats/chatroom.js";
+import {
+  showChatroom,
+  updateChatroom,
+} from "/src/scripts/view/navbar/chats/chatroom.js";
 
 const chatroomList = document.getElementById("chatrooms-list");
 const chatroom = document.getElementById("chatroom");
@@ -55,12 +58,49 @@ export async function updateChatrooms() {
       </div>
     `;
     })(item);
+
+    let chatListDiv = document.getElementById(`chats-list-${item.id}`);
+    if (!chatListDiv) {
+      chatroom.innerHTML += `
+        <div id="chats-list-${item.id}" class="d-flex flex-column gap-1"></div>
+      `;
+    }
   }
   for (let item of data) {
     document
       .getElementById(`chatroom-${item.id}`)
       .addEventListener("click", () => {
+        showChatroom(item.id);
         updateChatroom(item.id);
       });
   }
+}
+
+export function alertChats() {
+  const accessToken = localStorage.getItem("accessToken");
+
+  const wsScheme = window.location.protocol === "https:" ? "wss" : "ws";
+  const wsUrl = `${wsScheme}://localhost:2344/ws/chats/?token=${accessToken}`;
+  const socket = new WebSocket(wsUrl);
+
+  socket.onmessage = function (event) {
+    const data = JSON.parse(event.data);
+    if (data.object == "chat") {
+      updateChatroom(data.chatroom_id);
+    } else if (data.object == "chatroom") {
+      updateChatrooms();
+    }
+  };
+
+  socket.onclose = function (event) {
+    console.error("WebSocket closed unexpectedly:", event);
+  };
+
+  socket.onopen = function (event) {
+    console.log("WebSocket connection opened:", event);
+  };
+
+  socket.onerror = function (event) {
+    console.error("WebSocket error observed:", event);
+  };
 }

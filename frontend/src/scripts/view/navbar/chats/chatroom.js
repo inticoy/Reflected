@@ -4,23 +4,52 @@ import { showToast } from "/src/scripts/utils/toast.js";
 const chatroomList = document.getElementById("chatrooms-list");
 const chatroom = document.getElementById("chatroom");
 const chatroomBottom = document.getElementById("chatroom-bottom");
-const chatList = document.getElementById("chats-list");
-const chatInput = document.getElementById("chatting-input");
-const chatSendBtn = document.getElementById("btn-sendchat");
-const myNickname = localStorage.getItem("nickname");
 
-export async function updateChatroom(chatroomId) {
+export async function showChatroom(chatroomId) {
   chatroomList.hide();
   chatroom.show();
   chatroomBottom.show();
 
-  chatSendBtn.addEventListener("click", async () => {
-    var message = chatInput.value;
-    if (!message) message = "";
-    sendChat(chatroomId, message);
+  let chatsLists = chatroom.querySelectorAll(":scope > div");
+  chatsLists.forEach((div) => {
+    if (div.id != `chats-list-${chatroomId}`) {
+      div.hide();
+    } else {
+      div.show();
+    }
   });
 
-  chatList.innerHTML = "";
+  const chatInput = document.getElementById("chatting-input");
+  const newInput = chatInput.cloneNode(true);
+  chatInput.parentNode.replaceChild(newInput, chatInput);
+
+  newInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter" && event.isComposing === false) {
+      event.preventDefault();
+      var message = newInput.value.trim();
+      newInput.value = "";
+      if (!message) return;
+      sendChat(chatroomId, message);
+    }
+  });
+
+  let chatSendBtn = document.getElementById("btn-sendchat");
+  let newButton = chatSendBtn.cloneNode(true);
+  chatSendBtn.parentNode.replaceChild(newButton, chatSendBtn);
+
+  newButton.addEventListener("click", async () => {
+    var message = newInput.value.trim();
+    newInput.value = "";
+    if (!message) return;
+    sendChat(chatroomId, message);
+  });
+}
+
+export async function updateChatroom(chatroomId) {
+  const myNickname = localStorage.getItem("nickname");
+
+  let chatsList = document.getElementById(`chats-list-${chatroomId}`);
+  chatsList.innerText = "";
 
   let response = await getAPI(`v1/chatrooms/${chatroomId}/chats`);
   if (!response.ok) {
@@ -31,7 +60,7 @@ export async function updateChatroom(chatroomId) {
   if (data) {
     data.forEach((item) => {
       if (item.from_user.nickname == myNickname) {
-        chatList.innerHTML += `
+        chatsList.innerHTML += `
         <div class="chat-message-me d-flex px-3 py-2">
           <div class="d-inline-flex flex-column gap-2">
             <div class="chat-message-box px-3 py-3">
@@ -42,7 +71,7 @@ export async function updateChatroom(chatroomId) {
         </div>
       `;
       } else {
-        chatList.innerHTML += `
+        chatsList.innerHTML += `
         <div class="chat-message-other d-flex px-3 py-2">
           <div class="d-inline-flex flex-column gap-2">
             <div class="chat-message-box px-3 py-3">
@@ -55,29 +84,12 @@ export async function updateChatroom(chatroomId) {
       }
     });
   }
-  const accessToken = localStorage.getItem("accessToken");
 
-  const wsScheme = window.location.protocol === "https:" ? "wss" : "ws";
-  const wsUrl = `${wsScheme}://localhost:2344/ws/chats/?token=${accessToken}`;
-  const socket = new WebSocket(wsUrl);
-
-  socket.onmessage = function (event) {
-    const data = JSON.parse(event.data);
-    console.log("new message");
-    console.log(data);
-  };
-
-  socket.onclose = function (event) {
-    console.error("WebSocket closed unexpectedly:", event);
-  };
-
-  socket.onopen = function (event) {
-    console.log("WebSocket connection opened:", event);
-  };
-
-  socket.onerror = function (event) {
-    console.error("WebSocket error observed:", event);
-  };
+  const lastMessage = chatsList.lastElementChild;
+  if (lastMessage) {
+    lastMessage.scrollIntoView();
+    // lastMessage.scrollIntoView({ behavior: "smooth" });
+  }
 }
 
 async function sendChat(chatroomId, message) {

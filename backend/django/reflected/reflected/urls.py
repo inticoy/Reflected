@@ -29,5 +29,4 @@ urlpatterns = [
     path("v1/friends/", include(FriendRouter.urls)),
     path("v1/notifications/", include("notification.urls")),
     path("v1/users/", include("user.urls")),
-    path("chat/", include("chat.urls")),
 ]

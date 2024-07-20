@@ -25,10 +25,7 @@ application = ProtocolTypeRouter(
             URLRouter(
                 [
                     path("ws/notifications/", NotificationConsumer.as_asgi()),
-                    re_path(
-                        r"ws/chat/(?P<room_name>\w+)/$",
-                        ChatConsumer.as_asgi(),
-                    ),
+                    path("ws/chats/", ChatConsumer.as_asgi()),
                 ]
             )
         ),

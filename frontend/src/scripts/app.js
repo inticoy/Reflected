@@ -1,8 +1,11 @@
 import { setAppSwitch, navigateTo } from "/src/scripts/utils/display.js";
 import { setHome, updateHome } from "/src/scripts/view/home.js";
 import { login, setLogin } from "/src/scripts/view/login.js";
-import { setNavbar, updateNavbar } from "/src/scripts/view/navbar.js";
-import { alertNotifications } from "/src/scripts/view/navbar/notifications.js";
+import {
+  setNavbar,
+  updateNavbar,
+  initWebSocket,
+} from "/src/scripts/view/navbar.js";
 
 function setApp() {
   setLogin();
@@ -18,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     navigateTo("app-home", false);
     updateHome();
     updateNavbar();
-    alertNotifications();
+    initWebSocket();
   } else {
     navigateTo("app-login", false);
   }

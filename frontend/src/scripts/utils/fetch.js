@@ -1,29 +1,83 @@
-import { getServerHost } from "/src/scripts/utils/var.js";
+import { HTTPCODE, getServerHost } from "/src/scripts/utils/var.js";
+
+const verifyPath = "v1/auth/token/verify/";
+const refreshPath = "v1/auth/token/refresh/";
 
 export async function verifyToken() {
-  const accessToken = localStorage.getItem("accessToken");
-  if (!accessToken) {
-    console.error(`Error: cannot login without access token`);
+  try {
+    const url = getServerHost() + "/" + verifyPath;
+    let accessToken = localStorage.getItem("accessToken");
+    let jsonTokenData = { token: accessToken };
+    let response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": getCookie("csrftoken"),
+      },
+      body: JSON.stringify(jsonTokenData),
+    });
+    if (!response.ok) {
+      accessToken = await refreshAccessToken();
+      jsonTokenData = { token: accessToken };
+      response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": getCookie("csrftoken"),
+        },
+        body: JSON.stringify(jsonTokenData),
+      });
+    }
+    return response.ok;
+  } catch {
     return false;
   }
+}
 
-  const path = "v1/auth/token/verify/";
-  const jsonToken = { token: accessToken };
-
-  const response = await postAPI(path, jsonToken);
-  return response.ok;
+async function refreshAccessToken() {
+  try {
+    const url = getServerHost() + "/" + refreshPath;
+    let refreshToken = localStorage.getItem("refreshToken");
+    let response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": getCookie("csrftoken"),
+      },
+      body: JSON.stringify({ refresh: refreshToken }),
+    });
+    if (!response.ok) {
+      return null;
+    }
+    const data = await response.json();
+    localStorage.setItem("accessToken", data.access);
+    console.log("accessToken updated");
+    return data.access;
+  } catch {
+    console.error(`Error: ${err.message}`);
+    return null;
+  }
 }
 
 export async function getAPI(path) {
-  const accessToken = localStorage.getItem("accessToken");
-  const url = getServerHost() + "/" + path;
   try {
-    const response = await fetch(url, {
+    const url = getServerHost() + "/" + path;
+    let accessToken = localStorage.getItem("accessToken");
+    let response = await fetch(url, {
       method: "GET",
       headers: {
         Authorization: "Bearer " + accessToken,
       },
     });
+    if (response.status == HTTPCODE.UNAUTHORIZED) {
+      accessToken = await refreshAccessToken();
+      response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + accessToken,
+        },
+      });
+    }
     return response;
   } catch (err) {
     console.error(`Error: ${err.message}`);
@@ -32,10 +86,10 @@ export async function getAPI(path) {
 }
 
 export async function postAPI(path, jsonData) {
-  const accessToken = localStorage.getItem("accessToken");
-  const url = getServerHost() + "/" + path;
   try {
-    const response = await fetch(url, {
+    const url = getServerHost() + "/" + path;
+    let accessToken = localStorage.getItem("accessToken");
+    let response = await fetch(url, {
       method: "POST",
       headers: {
         Authorization: "Bearer " + accessToken,
@@ -44,6 +98,18 @@ export async function postAPI(path, jsonData) {
       },
       body: JSON.stringify(jsonData),
     });
+    if (response.status == HTTPCODE.UNAUTHORIZED) {
+      accessToken = await refreshAccessToken();
+      response = await fetch(url, {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + accessToken,
+          "Content-Type": "application/json",
+          "X-CSRFToken": getCookie("csrftoken"),
+        },
+        body: JSON.stringify(jsonData),
+      });
+    }
     return response;
   } catch (err) {
     console.error(`Error: ${err.message}`);

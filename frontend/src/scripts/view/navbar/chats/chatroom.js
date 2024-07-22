@@ -64,7 +64,7 @@ export async function updateChatroom(chatroomId) {
         <div class="chat-message-me d-flex px-3 py-2">
           <div class="d-inline-flex flex-column gap-2">
             <div class="chat-message-box px-3 py-3">
-              <span class="medium">${item.message}</span>
+              <span class="medium" style="word-break: break-all;">${item.message}</span>
             </div>
             <span class="small chat-timestamp">00:00</span>
           </div>
@@ -75,7 +75,7 @@ export async function updateChatroom(chatroomId) {
         <div class="chat-message-other d-flex px-3 py-2">
           <div class="d-inline-flex flex-column gap-2">
             <div class="chat-message-box px-3 py-3">
-              <span class="medium">${item.message}</span>
+              <span class="medium" style="word-break: break-all;">${item.message}</span>
             </div>
             <span class="small chat-timestamp">00:00</span>
           </div>

@@ -1,20 +1,16 @@
-import { verifyToken } from "/src/scripts/utils/fetch.js";
-import { getServerHost } from "/src/scripts/utils/var.js";
+import Api from "/src/utils/api.js";
+import { API_CONFIG } from "/src/utils/variables.js";
 
 const ftLoginButton = document.getElementById("btn-oauth-ft");
 const googleLoginButton = document.getElementById("btn-oauth-google");
 const naverLoginButton = document.getElementById("btn-oauth-naver");
 const kakaoLoginButton = document.getElementById("btn-oauth-kakao");
 
-export function getAccessToken() {
-  return localStorage.getItem("accessToken");
-}
-
 export async function setLogin() {
-  ftLoginButton.href = getServerHost() + "/v1/auth/oauth/ft";
-  googleLoginButton.href = getServerHost() + "/v1/auth/oauth/google";
-  naverLoginButton.href = getServerHost() + "/v1/auth/oauth/naver";
-  kakaoLoginButton.href = getServerHost() + "/v1/auth/oauth/kakao";
+  ftLoginButton.href = `${API_CONFIG.BASE_URL}/${API_CONFIG.ENDPOINT.OAUTH.FT}`;
+  googleLoginButton.href = `${API_CONFIG.BASE_URL}/${API_CONFIG.ENDPOINT.OAUTH.GOOGLE}`;
+  naverLoginButton.href = `${API_CONFIG.BASE_URL}/${API_CONFIG.ENDPOINT.OAUTH.NAVER}`;
+  kakaoLoginButton.href = `${API_CONFIG.BASE_URL}/${API_CONFIG.ENDPOINT.OAUTH.KAKAO}`;
 }
 
 export async function login() {
@@ -35,5 +31,5 @@ export async function login() {
     window.history.replaceState(null, document.title, window.location.pathname);
   }
 
-  return await verifyToken();
+  return await Api.verifyAccessToken();
 }

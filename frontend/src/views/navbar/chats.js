@@ -1,8 +1,6 @@
-import { getAPI } from "/src/scripts/utils/fetch.js";
-import {
-  showChatroom,
-  updateChatroom,
-} from "/src/scripts/view/navbar/chats/chatroom.js";
+import { API_CONFIG } from "/src/utils/variables.js";
+import Api from "/src/utils/api.js";
+import { showChatroom, updateChatroom } from "./chats/chatroom.js";
 
 const chatroomList = document.getElementById("chatrooms-list");
 const chatroom = document.getElementById("chatroom");
@@ -19,7 +17,7 @@ export async function updateChatrooms() {
   chatroom.hide();
   chatroomBottom.hide();
 
-  let response = await getAPI("v1/chatrooms/");
+  let response = await Api.get(API_CONFIG.ENDPOINT.CHATROOMS);
   if (!response.ok) {
     return;
   }

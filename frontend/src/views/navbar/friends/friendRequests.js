@@ -1,13 +1,13 @@
-import { getAPI, postAPI } from "/src/scripts/utils/fetch.js";
-import { showToast } from "/src/scripts/utils/toast.js";
-import { HTTPCODE } from "/src/scripts/utils/var.js";
+import { HTTPCODE, API_CONFIG } from "/src/utils/variables.js";
+import Api from "/src/utils/api.js";
+import { showToast } from "/src/components/toast/toast.js";
 
 var friendOffcanvas = new bootstrap.Offcanvas(
   document.getElementById("offcanvas-friends")
 );
 
 export async function updateFriendRequests() {
-  let response = await getAPI("v1/friends/requests");
+  let response = await Api.get(API_CONFIG.ENDPOINT.FRIENDS.REQUESTS);
   if (!response.ok) {
     /* TODO: error handling */
     return;
@@ -54,9 +54,8 @@ export async function updateFriendRequests() {
         .getElementById(`friend-request-accept-btn-${item.id}`)
         .addEventListener("click", async () => {
           console.log("click accept");
-          const response = await postAPI(
-            `v1/friends/requests/${item.id}/accept`,
-            {}
+          const response = await Api.post(
+            `${API_CONFIG.ENDPOINT.FRIENDS.REQUESTS}${item.id}/accept`
           );
           const data = await response.json();
           switch (response.status) {
@@ -81,9 +80,8 @@ export async function updateFriendRequests() {
       document
         .getElementById(`friend-request-decline-btn-${item.id}`)
         .addEventListener("click", async () => {
-          const response = await postAPI(
-            `v1/friends/requests/${item.id}/decline`,
-            {}
+          const response = await Api.post(
+            `${API_CONFIG.ENDPOINT.FRIENDS.REQUESTS}${item.id}/decline`
           );
           const data = await response.json();
           switch (response.status) {
@@ -137,7 +135,7 @@ export function setAddFriend() {
       return;
     }
 
-    const response = await postAPI("v1/friends/requests", {
+    const response = await Api.post("API_CONFIG.ENDPOINT.FRIENDS.REQUESTS", {
       nickname: friendNickname,
     });
     switch (response.status) {

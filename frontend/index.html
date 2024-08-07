@@ -58,7 +58,7 @@
 
         <div class="d-flex align-items-center justify-content-center">
           <button
-            id="nav-noti-btn"
+            id="nav-notifications-btn"
             class="btn btn-navbar p-2"
             type="button"
             data-bs-toggle="offcanvas"
@@ -69,7 +69,7 @@
             <span class="material-symbols-rounded"> notifications </span>
           </button>
           <button
-            id="nav-friend-btn"
+            id="nav-friends-btn"
             class="btn btn-navbar ms-2 p-2"
             type="button"
             data-bs-toggle="offcanvas"
@@ -80,11 +80,11 @@
             <span class="material-symbols-rounded"> people </span>
           </button>
           <button
-            id="nav-chat-btn"
+            id="nav-chats-btn"
             class="btn btn-navbar ms-2 p-2"
             type="button"
             data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvas-chat"
+            data-bs-target="#offcanvas-chats"
             aria-controls="offcanvasNavbar"
             aria-label="Toggle navigation"
           >
@@ -98,16 +98,14 @@
           aria-labelledby="offcanvas-notifications-label"
         >
           <div class="offcanvas-header p-4">
-            <span
-              class="black-han-sans-regular large offcanvas-title"
-              id="offcanvasNavbarLabel"
-            >
+            <span class="black-han-sans-regular large offcanvas-title">
               Notifications
             </span>
             <div
               class="d-flex flex-row justify-content-center align-items-center gap-2"
             >
               <div
+                id="offcanvas-notifications-read-btn"
                 class="btn-navbar rounded-circle p-0 d-flex flex-row align-items-center justify-content-center"
               >
                 <span class="material-symbols-rounded">
@@ -126,7 +124,7 @@
           </div>
           <div class="offcanvas-body px-3 py-0">
             <div
-              id="notifications-list"
+              id="offcanvas-notifications-list"
               class="d-flex flex-column justify-content-center align-items-center gap-1"
             ></div>
           </div>
@@ -291,16 +289,114 @@
         <div
           class="offcanvas offcanvas-end border-0"
           tabindex="-1"
-          id="offcanvas-chat"
+          id="offcanvas-chats"
           aria-labelledby="offcanvas-chat-label"
         >
-          <div id="offcanvas-chatrooms" class="d-flex h-100 flex-column">
-            <div class="offcanvas-header p-4">
-              <span
-                class="black-han-sans-regular large offcanvas-title"
-                id="offcanvasNavbarLabel"
-                >Chats</span
+          <div class="offcanvas-header p-4">
+            <span
+              class="black-han-sans-regular large offcanvas-title"
+              id="offcanvas-chats-header"
+              >Chats</span
+            >
+            <div
+              type="button"
+              class="btn-navbar rounded-circle p-0 d-flex flex-row align-items-center justify-content-center"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            >
+              <span class="material-symbols-rounded"> close </span>
+            </div>
+          </div>
+          <div
+            id="offcanvas-chats-list"
+            class="offcanvas-body px-3 py-0 d-flex flex-column gap-1"
+          ></div>
+        </div>
+        <div
+          class="offcanvas offcanvas-end border-0"
+          tabindex="-1"
+          id="offcanvas-chat"
+          aria-labelledby="offcanvas-chat"
+        >
+          <div class="offcanvas-header p-4">
+            <span
+              class="black-han-sans-regular large offcanvas-title"
+              id="offcanvas-chat-header"
+              >Chat</span
+            >
+            <div
+              type="button"
+              class="btn-navbar rounded-circle p-0 d-flex flex-row align-items-center justify-content-center"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            >
+              <span class="material-symbols-rounded"> close </span>
+            </div>
+          </div>
+          <div
+            id="offcanvas-chat-list"
+            class="offcanvas-body px-3 py-0 d-flex flex-column justify-content-between"
+          ></div>
+          <div
+            id="offcanvas-chat-bottom"
+            class="d-flex flex-column px-3 pt-0 pb-4 gap-0"
+          >
+            <div
+              class="utilbar py-2 px-3 d-flex flex-row gap-3 justify-content-end"
+            >
+              <div
+                id="offcanvas-chat-challenge-btn"
+                type="button"
+                class="btn-navbar rounded-circle p-0 d-flex flex-row align-items-center justify-content-center"
               >
+                <span class="material-symbols-rounded"> videogame_asset </span>
+              </div>
+              <div
+                id="offcanvas-chat-info-btn"
+                type="button"
+                class="btn-navbar rounded-circle p-0 d-flex flex-row align-items-center justify-content-center"
+              >
+                <span class="material-symbols-rounded"> info </span>
+              </div>
+            </div>
+            <div class="position-relative">
+              <input
+                id="offcanvas-chat-input"
+                type="text"
+                class="border-radius-32 form-control ps-4 py-3"
+                placeholder="Type..."
+                aria-label="ChatInput"
+                aria-describedby="basic-addon1"
+              />
+              <div
+                id="offcanvas-chat-send-btn"
+                class="position-absolute top-50 end-0 translate-middle btn-navbar rounded-circle d-flex flex-row align-items-center justify-content-center"
+              >
+                <span class="material-symbols-rounded"> send </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="offcanvas offcanvas-end border-0"
+          tabindex="-1"
+          id="offcanvas-friend"
+          aria-labelledby="offcanvas-friend-label"
+        >
+          <div class="offcanvas-header p-4">
+            <span
+              class="black-han-sans-regular large offcanvas-title"
+              id="offcanvas-friend-header"
+              >Friend</span
+            >
+            <div class="d-flex flex-row p-0 gap-2">
+              <div
+                id="friend-block-btn"
+                type="button"
+                class="btn-navbar rounded-circle p-0 d-flex flex-row align-items-center justify-content-center"
+              >
+                <span class="material-symbols-rounded"> block </span>
+              </div>
               <div
                 type="button"
                 class="btn-navbar rounded-circle p-0 d-flex flex-row align-items-center justify-content-center"
@@ -310,49 +406,77 @@
                 <span class="material-symbols-rounded"> close </span>
               </div>
             </div>
-            <div
-              id="chatrooms-list"
-              class="offcanvas-body px-3 py-0 d-flex flex-column gap-1"
-            ></div>
-            <div
-              id="chatroom"
-              class="offcanvas-body px-3 py-0 d-flex flex-column justify-content-between"
-            ></div>
-            <div
-              id="chatroom-bottom"
-              class="d-flex flex-column px-3 pt-0 pb-4 gap-0"
-            >
+          </div>
+          <div
+            id="friend-info"
+            class="offcanvas-body d-flex flex-column align-items-center justify-content px-4 py-0 gap-3"
+          >
+            <div class="w-100 d-flex flex-column align-items-center gap-3">
               <div
-                class="utilbar py-2 px-3 d-flex flex-row gap-3 justify-content-end"
+                class="card card--transparent w-100 d-flex flex-row align-items-center p-3 gap-4"
               >
+                <span id="friend-profile-name-card-image">image</span>
                 <div
-                  type="button"
-                  class="btn-navbar rounded-circle p-0 d-flex flex-row align-items-center justify-content-center"
+                  id="friend-profile-name-card-text"
+                  class="d-flex flex-column justify-content-center gap-2"
                 >
-                  <span class="material-symbols-rounded">
-                    videogame_asset
-                  </span>
-                </div>
-                <div
-                  type="button"
-                  class="btn-navbar rounded-circle p-0 d-flex flex-row align-items-center justify-content-center"
-                >
-                  <span class="material-symbols-rounded"> info </span>
+                  <span id="friend-profile-name-card-nickname" class="x-large"
+                    >nickname</span
+                  >
+                  <span
+                    id="friend-profile-name-card-register-date"
+                    class="medium"
+                    >1970.01.01. Social 가입</span
+                  >
                 </div>
               </div>
-              <input
-                id="chatting-input"
-                type="text"
-                class="border-radius-32 form-control ps-4 py-3"
-                placeholder="Type..."
-                aria-label="ChatInput"
-                aria-describedby="basic-addon1"
-              />
+            </div>
+            <div
+              id="friend-history-section"
+              class="w-100 d-flex flex-column justify-content-center gap-3"
+            >
+              <span class="large">Match History</span>
               <div
-                id="btn-sendchat"
-                class="btn-navbar rounded-circle d-flex flex-row align-items-center justify-content-center"
+                class="w-100 d-flex flex-row align-items-center justify-content-center gap-3"
               >
-                <span class="material-symbols-rounded"> send </span>
+                <div
+                  class="w-100 card card--white d-flex flex-row align-items-center justify-content-between"
+                >
+                  <span class="material-symbols-rounded"> joystick </span>
+                  <span id="friend-history-record-card-text" class="medium"
+                    >0W 0L</span
+                  >
+                </div>
+                <div
+                  class="w-100 card card--white d-flex flex-row align-items-center justify-content-between"
+                >
+                  <span class="material-symbols-rounded"> trophy </span>
+                  <span id="friend-history-probability-card-text" class="medium"
+                    >0%</span
+                  >
+                </div>
+              </div>
+              <div
+                id="friend-histories"
+                class="w-100 d-flex flex-column align-items-center justify-content-center gap-2"
+              >
+                <div
+                  class="list w-100 d-flex flex-row align-items-center justify-content-between"
+                >
+                  <div
+                    class="d-flex flex-row align-items-center justify-content-center gap-3"
+                  >
+                    <span class="material-symbols-rounded">swords</span>
+                    <span class="medium">nickname</span>
+                  </div>
+
+                  <div
+                    class="d-flex flex-column align-items-center justify-content-center gap-1"
+                  >
+                    <span class="small">0:0</span>
+                    <span class="small">70.01.01</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

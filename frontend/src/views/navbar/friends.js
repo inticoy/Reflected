@@ -1,6 +1,10 @@
 import Api from "/src/utils/api.js";
+import OffcanvasManager from "/src/components/offcanvas/offcanvas.js";
+
+import { formatDate } from "/src/utils/datetime.js";
 import { updateFriendRequests } from "./friends/friendRequests.js";
-import { API_CONFIG } from "../../utils/variables.js";
+import { API_CONFIG, getSocialTypeName } from "../../utils/variables.js";
+import { setChat, updateChat } from "./chats/chat.js";
 
 let friendsData = [];
 
@@ -13,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 export function setFriends() {
-  const friendsList = document.getElementById("nav-friend-btn");
+  const friendsList = document.getElementById("nav-friends-btn");
   friendsList.addEventListener("click", updateFriends);
 
   const friendsTab = document.getElementById("friends-tab");
@@ -61,11 +65,13 @@ function displayFriends(data) {
 					    class="d-flex flex-row gap-2 p-0 align-items-center justify-content-center"
 				    >
               <div
+                id="friend-chat-${item.id}"
                 class="btn btn-navbar p-2"
               >
-                <span class="material-symbols-rounded"> forum </span>
+              <span class="material-symbols-rounded"> forum </span>
               </div>
               <div
+                id="friend-info-${item.id}"
                 class="btn btn-navbar p-2"
               >
                 <span class="material-symbols-rounded"> info </span>
@@ -73,5 +79,43 @@ function displayFriends(data) {
 				    </div>
 			    </div>
 		    `;
+  });
+
+  data.forEach((item) => {
+    document
+      .getElementById(`friend-chat-${item.id}`)
+      .addEventListener("click", async () => {
+        const response = await Api.post(API_CONFIG.ENDPOINT.CHATROOMS, {
+          nicknames: [item.friend.nickname],
+        });
+        if (!response) {
+        }
+        let data = await response.json();
+        {
+          OffcanvasManager.hide("offcanvas-friends");
+          OffcanvasManager.show("offcanvas-chat");
+          setChat(data.id);
+          updateChat(data.id);
+        }
+      });
+
+    document
+      .getElementById(`friend-info-${item.id}`)
+      .addEventListener("click", async () => {
+        OffcanvasManager.hide("offcanvas-friends");
+        OffcanvasManager.show("offcanvas-friend");
+
+        var name = document.getElementById("friend-profile-name-card-nickname");
+        name.innerText = item.friend.nickname;
+
+        var about = document.getElementById(
+          "friend-profile-name-card-register-date"
+        );
+        about.innerText =
+          formatDate(item.friend.date_joined) +
+          " " +
+          getSocialTypeName(item.friend.social_type) +
+          " 가입";
+      });
   });
 }

@@ -8,4 +8,25 @@ function formatDate(isoDateString) {
   return `${year}.${month}.${day}.`;
 }
 
-export { formatDate };
+function formatTime(isoDateString) {
+  const date = new Date(isoDateString);
+
+  return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+}
+
+function formatDateTime(isoDateString) {
+  const date = new Date(isoDateString);
+  const today = new Date();
+
+  if (
+    date.getFullYear() === today.getFullYear() &&
+    date.getMonth() === today.getMonth() &&
+    date.getDate() === today.getDate()
+  ) {
+    return formatTime(isoDateString);
+  } else {
+    return formatDate(isoDateString);
+  }
+}
+
+export { formatDate, formatTime, formatDateTime };

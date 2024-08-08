@@ -2,6 +2,7 @@ import Api from "/src/utils/api.js";
 import OffcanvasManager from "/src/components/offcanvas/offcanvas.js";
 
 import { API_CONFIG } from "/src/utils/variables.js";
+import { formatDateTime } from "/src/utils/datetime.js";
 import { setChat, updateChat } from "./chats/chat.js";
 
 const chatsList = document.getElementById("offcanvas-chats-list");
@@ -26,6 +27,17 @@ export async function updateChats() {
       let friendNickname = await item.participants.find(
         (participant) => participant !== myNickname
       );
+
+      let latestMessage = item.latest_chat
+        ? item.latest_chat.message
+        : "No message";
+      if (latestMessage.length > 15) {
+        latestMessage = latestMessage.substring(0, 15) + "...";
+      }
+      let latestTime = item.latest_chat
+        ? formatDateTime(item.latest_chat.created_at)
+        : "No time";
+
       chatsList.innerHTML += `
       <div
         id="offcanvas-chats-room-${item.id}"
@@ -41,14 +53,14 @@ export async function updateChats() {
           </div>
           <div class="chatroom-info d-flex flex-column gap-1">
             <span class="medium">${friendNickname}</span>
-            <span class="small">Recent Message?</span>
+            <span class="small">${latestMessage}</span>
           </div>
         </div>
         <div
           class="chatroom-right d-flex flex-column gap-2 align-items-end"
         >
-          <span class="small">15</span>
-          <span class="small">24.01.01.</span>
+          <span class="small">0</span>
+          <span class="small">${latestTime}</span>
         </div>
       </div>
     `;

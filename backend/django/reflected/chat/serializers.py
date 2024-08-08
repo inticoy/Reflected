@@ -16,7 +16,14 @@ class ChatRoomSerializer(serializers.ModelSerializer):
     participants = serializers.SlugRelatedField(
         many=True, slug_field="nickname", queryset=User.objects.all()
     )
+    latest_chat = serializers.SerializerMethodField()
 
     class Meta:
         model = ChatRoom
-        fields = ["id", "participants", "created_at"]
+        fields = ["id", "participants", "created_at", "latest_chat"]
+
+    def get_latest_chat(self, obj):
+        latest_chat = obj.get_latest_chat()
+        if latest_chat:
+            return ChatSerializer(latest_chat).data
+        return None

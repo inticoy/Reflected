@@ -46,6 +46,11 @@ class Api {
     let response = await this.post(API_CONFIG.ENDPOINT.TOKEN.VERIFY, {
       token: accessToken,
     });
+    if (!response.ok) {
+      response = await this.post(API_CONFIG.ENDPOINT.TOKEN.VERIFY, {
+        token: localStorage.getItem("accessToken"),
+      });
+    }
     return response.ok;
   }
 

@@ -2,6 +2,7 @@ import Api from "/src/utils/api.js";
 import OffcanvasManager from "/src/components/offcanvas/offcanvas.js";
 
 import { API_CONFIG } from "/src/utils/variables.js";
+import { formatDateTime } from "/src/utils/datetime.js";
 import { showToast } from "/src/components/toast/toast.js";
 
 const chatList = document.getElementById("offcanvas-chat-list");
@@ -78,9 +79,13 @@ export async function updateChat(chatroomId) {
         <div class="chat-message-me d-flex px-3 py-2">
           <div class="d-inline-flex flex-column align-items-end gap-2 w-100">
             <div class="chat-message-box px-3 py-3 mw-100">
-              <span class="medium" style="word-break: break-all; overflow-wrap: break-word;">${item.message}</span>
+              <span class="medium" style="word-break: break-all; overflow-wrap: break-word;">${
+                item.message
+              }</span>
             </div>
-            <span class="small chat-timestamp">00:00</span>
+            <span class="small chat-timestamp">${formatDateTime(
+              item.created_at
+            )}</span>
           </div>
         </div>
       `;
@@ -89,9 +94,13 @@ export async function updateChat(chatroomId) {
         <div class="chat-message-other d-flex px-3 py-2">
           <div class="d-inline-flex flex-column align-items-start gap-2 w-100">
             <div class="chat-message-box px-3 py-3 mw-100">
-              <span class="medium" style="word-break: break-all; overflow-wrap: break-word;">${item.message}</span>
+              <span class="medium" style="word-break: break-all; overflow-wrap: break-word;">${
+                item.message
+              }</span>
             </div>
-            <span class="small chat-timestamp">00:00</span>
+            <span class="small chat-timestamp">${formatDateTime(
+              item.created_at
+            )}</span>
           </div>
         </div>
       `;

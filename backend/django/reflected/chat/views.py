@@ -6,7 +6,7 @@ from chat.serializers import ChatSerializer, ChatRoomSerializer
 from user.models import User
 from rest_framework.decorators import action
 from django.contrib.auth import get_user_model
-from django.db.models import Count, Q
+from django.db.models import Count, Q, Max
 
 User = get_user_model()
 
@@ -20,7 +20,11 @@ def room(request, room_name):
 
 
 class ChatRoomViewSet(viewsets.ModelViewSet):
-    queryset = ChatRoom.objects.all()
+    queryset = (
+        ChatRoom.objects.all()
+        .prefetch_related("participants")
+        .annotate(latest_chat_time=Max("chats__created_at"))
+    )
     serializer_class = ChatRoomSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -75,7 +79,12 @@ class ChatRoomViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         user = request.user
-        chat_rooms = ChatRoom.objects.filter(participants=user)
+        chat_rooms = (
+            ChatRoom.objects.filter(participants=user)
+            .annotate(latest_chat_time=Max("chats__created_at"))
+            .prefetch_related("participants")
+            .order_by("-latest_chat_time")
+        )
         serializer = self.get_serializer(chat_rooms, many=True)
         return Response(serializer.data)
 

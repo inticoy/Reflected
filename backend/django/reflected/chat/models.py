@@ -8,6 +8,9 @@ class ChatRoom(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def get_latest_chat(self):
+        return self.chats.order_by("-created_at").first()
+
 
 class Chat(models.Model):
     room = models.ForeignKey(ChatRoom, related_name="chats", on_delete=models.CASCADE)

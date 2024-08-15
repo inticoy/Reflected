@@ -2,6 +2,7 @@ import Api from "/src/utils/api.js";
 import { navigateTo } from "/src/utils/display.js";
 import { showToast } from "/src/components/toast/toast.js";
 import { updateMypage } from "/src/views/home/mypage.js";
+import { setPlayButtons } from "./home/play.js";
 
 const buttons = [
   { id: "home-play-btn", handler: handlePlayButtonClick },
@@ -21,6 +22,7 @@ const buttons = [
 ];
 
 function handlePlayButtonClick() {
+  setPlayButtons();
   navigateTo("app-play");
 }
 

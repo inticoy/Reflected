@@ -985,7 +985,46 @@
         class="d-flex flex-column align-items-center justify-content-between h-100 gap-3"
         style="padding-top: 56px"
       >
-        <div></div>
+        <div
+          class="w-100 px-4 d-flex flex-row align-items-center justify-content-between"
+        >
+          <div
+            id="game-opponent-nickname"
+            class="w-100 d-flex flex-row justify-content-center"
+          >
+            <span class="medium">jukim2</span>
+          </div>
+          <div
+            class="w-100 d-flex flex-row align-items-center justify-content-between"
+            style="
+              background: linear-gradient(
+                103.8deg,
+                #f4501d 0.36%,
+                #c98069 50.36%,
+                #3b6bc0 50.36%,
+                #0c3887 100.36%
+              );
+              border-radius: 12px;
+            "
+          >
+            <div
+              class="w-100 d-flex flex-row align-items-center justify-content-center"
+            >
+              <span id="game-opponent-score" class="x-large">0</span>
+            </div>
+            <div
+              class="w-100 d-flex flex-row align-items-center justify-content-center"
+            >
+              <span id="game-my-score" class="x-large">0</span>
+            </div>
+          </div>
+          <div
+            id="game-my-nickname"
+            class="w-100 d-flex flex-row justify-content-center"
+          >
+            <span class="medium">jukim2</span>
+          </div>
+        </div>
         <div class="w-100 px-4">
           <div
             id="game-container"
@@ -999,6 +1038,7 @@
             "
           >
             <div
+              id="opponent-slider"
               class="position-absolute"
               style="
                 background-color: white;

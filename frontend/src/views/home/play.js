@@ -1,5 +1,11 @@
 import { navigateTo } from "../../utils/display.js";
 
+const ball = document.getElementById("ball");
+const opponentSlider = document.getElementById("opponent-slider");
+const mySlider = document.getElementById("my-slider");
+const opponentScore = document.getElementById("game-opponent-score");
+const myScore = document.getElementById("game-my-score");
+
 export function setPlayButtons() {
   document.getElementById("gameroom-jukim2").addEventListener("click", () => {
     navigateTo("app-gameroom");
@@ -7,104 +13,114 @@ export function setPlayButtons() {
 
   document.getElementById("game-start").addEventListener("click", () => {
     navigateTo("app-game");
-    initializeGame(); // 게임 초기화 함수 호출
+    requestAnimationFrame(moveBall);
   });
 
+  addSliderController();
+}
+
+function addSliderController() {
   document.addEventListener("keydown", function (event) {
-    const slider = document.getElementById("my-slider");
-    const step = 3; // 이동 단위 (%)
+    const step = 3;
 
-    // 현재 left 값을 가져와서 %로 변환
-    let currentLeft = parseFloat(window.getComputedStyle(slider).left);
-    let parentWidth = slider.parentElement.clientWidth;
-
-    // 현재 left 값의 %를 계산
-    let leftPercent = (currentLeft / parentWidth) * 100;
+    let leftPixel = parseFloat(window.getComputedStyle(mySlider).left);
+    let parentWidth = mySlider.parentElement.clientWidth;
+    let leftPercent = (leftPixel / parentWidth) * 100;
 
     if (event.key === "ArrowLeft") {
-      // 왼쪽 화살표 키를 눌렀을 때
-      leftPercent = Math.max(leftPercent - step, 10); // 최소 10%
+      leftPercent = Math.max(leftPercent - step, 10);
     } else if (event.key === "ArrowRight") {
-      // 오른쪽 화살표 키를 눌렀을 때
-      leftPercent = Math.min(leftPercent + step, 90); // 최대 90%
+      leftPercent = Math.min(leftPercent + step, 90);
     }
-
-    // left 값을 %로 설정
-    slider.style.left = leftPercent + "%";
+    mySlider.style.left = leftPercent + "%";
   });
 }
 
-let ballDirectionX;
-let ballDirectionY;
-
-// 공의 크기 비율 (부모 요소에 대한 %)
-const ballWidthPercent = 4.5; // 가로 사이즈 (부모의 4.5%)
-const ballHeightPercent = 3; // 세로 사이즈 (부모의 3%)
-
-function initializeGame() {
-  const ball = document.getElementById("ball");
-
-  // 공의 초기 위치를 화면 중앙으로 설정
-  ball.style.top = "50%";
-  ball.style.left = "50%";
-
-  // 공의 초기 속도 및 방향 설정 (랜덤)
-  ballDirectionX = (Math.random() < 0.5 ? -1 : 1) * (Math.random() * 2 + 1);
-  ballDirectionY = (Math.random() < 0.5 ? -1 : 1) * (Math.random() * 2 + 1);
-
-  moveBall(); // 공 움직임 시작
-}
+let ballSpeedX = (Math.random() < 0.5 ? -1 : 1) * (Math.random() * 1 + 0.5);
+let ballSpeedY = (Math.random() < 0.5 ? -1 : 1) * (Math.random() * 1 + 0.5);
 
 function moveBall() {
-  const ball = document.getElementById("ball");
-  const container = document.getElementById("game-container");
+  let parentWidth = ball.parentElement.clientWidth;
+  let parentHeight = ball.parentElement.clientHeight;
 
-  // 부모 요소의 크기
-  const containerWidth = container.clientWidth;
-  const containerHeight = container.clientHeight;
+  let leftPixel = parseFloat(window.getComputedStyle(ball).left);
+  let topPixel = parseFloat(window.getComputedStyle(ball).top);
 
-  // 공의 크기를 %로 설정
-  const ballWidthPx = (containerWidth * ballWidthPercent) / 100;
-  const ballHeightPx = (containerHeight * ballHeightPercent) / 100;
+  let leftPercent = (leftPixel / parentWidth) * 100;
+  let topPercent = (topPixel / parentHeight) * 100;
 
-  ball.style.width = ballWidthPercent + "%";
-  ball.style.height = ballHeightPercent + "%";
+  let newLeft = leftPercent + ballSpeedX;
+  let newTop = topPercent + ballSpeedY;
 
-  // 공의 현재 위치를 %로 가져오기
-  let currentTopPercent = parseFloat(window.getComputedStyle(ball).top) || 50;
-  let currentLeftPercent = parseFloat(window.getComputedStyle(ball).left) || 50;
+  // 슬라이더의 위치 및 크기 가져오기
+  let myLeftPixel = parseFloat(window.getComputedStyle(mySlider).left);
+  let myTopPixel = parseFloat(window.getComputedStyle(mySlider).top);
+  let myWidthPercent = (mySlider.offsetWidth / parentWidth) * 100;
+  let myHeightPercent = (mySlider.offsetHeight / parentHeight) * 100;
 
-  // 이동 속도 조절
-  const speed = 0.5;
+  let myLeftPercent = (myLeftPixel / parentWidth) * 100;
+  let myTopPercent = (myTopPixel / parentHeight) * 100;
 
-  // 새로운 위치 계산
-  let newTopPercent = currentTopPercent + ballDirectionY * speed;
-  let newLeftPercent = currentLeftPercent + ballDirectionX * speed;
+  let opponentLeftPixel = parseFloat(
+    window.getComputedStyle(opponentSlider).left
+  );
+  let opponentTopPixel = parseFloat(
+    window.getComputedStyle(opponentSlider).top
+  );
+  let opponentWidthPercent = (opponentSlider.offsetWidth / parentWidth) * 100;
+  let opponentHeightPercent =
+    (opponentSlider.offsetHeight / parentHeight) * 100;
 
-  // 화면 경계를 넘는 경우 방향 반전
-  if (newTopPercent <= 0 || newTopPercent >= 100 - ballHeightPercent) {
-    ballDirectionY *= -1;
-    newTopPercent = Math.max(
-      0,
-      Math.min(newTopPercent, 100 - ballHeightPercent)
-    );
+  let opponentLeftPercent = (opponentLeftPixel / parentWidth) * 100;
+  let opponentTopPercent = (opponentTopPixel / parentHeight) * 100;
+
+  // 공이 슬라이더에 충돌하는지 확인
+  if (
+    newLeft >= myLeftPercent - myWidthPercent / 2 &&
+    newLeft <= myLeftPercent + myWidthPercent / 2 &&
+    newTop >= myTopPercent - myHeightPercent / 2 &&
+    newTop <= myTopPercent + myHeightPercent / 2
+  ) {
+    // 공이 슬라이더에 충돌하면 Y 방향을 반사
+    ballSpeedY = -ballSpeedY;
+    newTop = myTopPercent - myHeightPercent;
   }
-  if (newLeftPercent <= 0 || newLeftPercent >= 100 - ballWidthPercent) {
-    ballDirectionX *= -1;
-    newLeftPercent = Math.max(
-      0,
-      Math.min(newLeftPercent, 100 - ballWidthPercent)
-    );
+
+  if (
+    newLeft >= opponentLeftPercent - opponentWidthPercent / 2 &&
+    newLeft <= opponentLeftPercent + opponentWidthPercent / 2 &&
+    newTop >= opponentTopPercent - opponentHeightPercent / 2 &&
+    newTop <= opponentTopPercent + opponentHeightPercent / 2
+  ) {
+    // 공이 슬라이더에 충돌하면 Y 방향을 반사
+    ballSpeedY = -ballSpeedY;
+    newTop = opponentTopPercent + opponentHeightPercent;
   }
 
-  // 위치 업데이트
-  ball.style.top = newTopPercent + "%";
-  ball.style.left = newLeftPercent + "%";
+  if (newLeft >= 100) {
+    ballSpeedX = -ballSpeedX;
+    newLeft = 100;
+  }
+  if (newLeft <= 0) {
+    newLeft = 0;
+    ballSpeedX = -ballSpeedX;
+  }
 
-  // 다음 프레임 요청
+  if (newTop >= 100) {
+    ballSpeedY = -ballSpeedY;
+    newTop = 100;
+    opponentScore.textContent = Number(opponentScore.textContent) + 1;
+    ball.style.left = "50%";
+    ball.style.top = "50%";
+  } else if (newTop <= 0) {
+    newTop = 0;
+    ballSpeedY = -ballSpeedY;
+    myScore.textContent = Number(myScore.textContent) + 1;
+    ball.style.left = "50%";
+    ball.style.top = "50%";
+  } else {
+    ball.style.left = newLeft + "%";
+    ball.style.top = newTop + "%";
+  }
   requestAnimationFrame(moveBall);
 }
-
-// 공의 초기 위치를 화면 중앙으로 설정
-document.getElementById("ball").style.top = "50%";
-document.getElementById("ball").style.left = "50%";

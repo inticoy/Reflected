@@ -4,6 +4,8 @@ from game.models import Game
 
 
 class GameSerializer(serializers.ModelSerializer):
+    host = UserSerializer(read_only=True)
+    guest = UserSerializer(read_only=True)
 
     class Meta:
         model = Game

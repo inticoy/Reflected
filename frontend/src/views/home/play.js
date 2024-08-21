@@ -1,4 +1,6 @@
 import { navigateTo } from "../../utils/display.js";
+import Api from "/src/utils/api.js";
+import { API_CONFIG } from "/src/utils/variables.js";
 
 const ball = document.getElementById("ball");
 const opponentSlider = document.getElementById("opponent-slider");
@@ -6,17 +8,114 @@ const mySlider = document.getElementById("my-slider");
 const opponentScore = document.getElementById("game-opponent-score");
 const myScore = document.getElementById("game-my-score");
 
-export function setPlayButtons() {
-  document.getElementById("gameroom-jukim2").addEventListener("click", () => {
-    navigateTo("app-gameroom");
-  });
+export async function updatePlay() {
+  const gameList = document.getElementById("gameroom-list");
 
+  const response = await Api.get(`${API_CONFIG.ENDPOINT.GAMES}`);
+  if (!response.ok) {
+  }
+  gameList.innerHTML = "";
+  const data = await response.json();
+  for (const game of data) {
+    gameList.innerHTML += `
+      <div 
+        id="gameroom-list-${game.id}"
+        class="list d-flex flex-row justify-content-between px-3 py-2"
+      >
+        <div
+          class="d-flex flex-row gap-3 align-middle align-items-center"
+        >
+          <span class="material-symbols-rounded"> ${
+            game.status == 0 ? "videogame_asset" : "hourglass_top"
+          } </span>
+          <span class="medium"> ${game.name} </span>
+        </div>
+        <div class="d-flex flex-column gap-1 align-items-end">
+          <span class="small"> ${game.status == 0 ? "1" : "2"}/2 </span>
+          <span class="small"> 일반 방 </span>
+        </div>
+      </div>`;
+  }
+
+  for (const game of data) {
+    document
+      .getElementById(`gameroom-list-${game.id}`)
+      .addEventListener("click", async () => {
+        navigateTo("app-gameroom");
+        updateGameroom(game.id);
+      });
+  }
+}
+
+export function setPlayButtons() {
   document.getElementById("game-start").addEventListener("click", () => {
     navigateTo("app-game");
     requestAnimationFrame(moveBall);
   });
 
   addSliderController();
+}
+
+export async function updateGameroom(gameId) {
+  const gameMemberList = document.getElementById("gameroom-member-list");
+  const gameName = document.getElementById("gameroom-name");
+
+  const response = await Api.get(`${API_CONFIG.ENDPOINT.GAMES}${gameId}`);
+  if (!response.ok) {
+  }
+  const data = await response.json();
+  gameName.textContent = data.name;
+
+  gameMemberList.innerHTML = "";
+  gameMemberList.innerHTML += `
+    <div class="list d-flex flex-row justify-content-between px-3 py-2">
+      <div
+        class="d-flex flex-row gap-3 align-middle align-items-center"
+      >
+        <span class="material-symbols-rounded"> videogame_asset </span>
+        <div
+          class="d-flex flex-column gap-2 justify-content-between align-items-start"
+        >
+          <span class="medium"> ${data.host.nickname} </span>
+          <span class="small"> GOLD </span>
+        </div>
+      </div>
+      <div class="d-flex flex-column gap-1 align-items-end">
+        <div
+          type="button"
+          class="btn-navbar rounded-circle p-0 d-flex flex-row align-items-center justify-content-center"
+        >
+          <span class="material-symbols-rounded"> close </span>
+        </div>
+      </div>
+    </div>
+  `;
+
+  if (data.guest) {
+    gameMemberList.innerHTML += `
+      <div class="list d-flex flex-row justify-content-between px-3 py-2">
+        <div
+          class="d-flex flex-row gap-3 align-middle align-items-center"
+        >
+          <span class="material-symbols-rounded"> videogame_asset </span>
+          <div
+            class="d-flex flex-column gap-2 justify-content-between align-items-start"
+          >
+            <span class="medium"> ${data.guest.nickname} </span>
+            <span class="small"> GOLD </span>
+          </div>
+        </div>
+        <div class="d-flex flex-column gap-1 align-items-end">
+          <div
+            type="button"
+            class="btn-navbar rounded-circle p-0 d-flex flex-row align-items-center justify-content-center"
+          >
+            <span class="material-symbols-rounded"> close </span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
 }
 
 function addSliderController() {

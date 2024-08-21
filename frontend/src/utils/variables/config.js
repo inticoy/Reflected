@@ -21,6 +21,7 @@ const API_CONFIG = {
     NOTIFICATIONS: "v1/notifications/",
     FRIENDS: "v1/friends/",
     FRIENDS_REQUESTS: "v1/friends/requests/",
+    GAMES: "v1/games/",
     CHATS: "v1/chats/",
     CHATROOMS: "v1/chatrooms/",
   },

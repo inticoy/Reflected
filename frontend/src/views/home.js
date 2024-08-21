@@ -1,6 +1,7 @@
 import Api from "/src/utils/api.js";
 import { navigateTo } from "/src/utils/display.js";
 import { showToast } from "/src/components/toast/toast.js";
+import { updatePlay } from "/src/views/home/play.js";
 import { updateMypage } from "/src/views/home/mypage.js";
 import { setPlayButtons } from "./home/play.js";
 
@@ -23,6 +24,7 @@ const buttons = [
 
 function handlePlayButtonClick() {
   setPlayButtons();
+  updatePlay();
   navigateTo("app-play");
 }
 

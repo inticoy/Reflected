@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     "friend",
     "chat",
     "notification",
+    "game",
 ]
 
 MIDDLEWARE = [

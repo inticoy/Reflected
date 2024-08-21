@@ -1,5 +1,9 @@
 #! /bin/bash
 
+# if django column does not exist error raises
+# python manage.py migrate [model name] zero
+# python mangae.py migrate
+
 python manage.py makemigrations
 python manage.py migrate
 

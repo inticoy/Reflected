@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import path, include
 from friend.urls import FriendRouter
 from chat.urls import ChatRouter, ChatRoomRouter
+from game.urls import GameRouter
 
 
 urlpatterns = [
@@ -27,6 +28,7 @@ urlpatterns = [
     path("v1/chats/", include(ChatRouter.urls)),
     path("v1/chatrooms/", include(ChatRoomRouter.urls)),
     path("v1/friends/", include(FriendRouter.urls)),
+    path("v1/games/", include(GameRouter.urls)),
     path("v1/notifications/", include("notification.urls")),
     path("v1/users/", include("user.urls")),
 ]

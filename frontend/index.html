@@ -172,6 +172,51 @@
             </div>
           </div>
         </div>
+        <div
+          class="modal fade"
+          id="modal-game-code"
+          tabindex="-1"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="border-radius-12 modal-content">
+              <div class="modal-header px-4 py-3">
+                <span class="large modal-title" id="addFriendModalLabel">
+                  Enter game code
+                </span>
+                <div
+                  type="button"
+                  class="btn-navbar rounded-circle p-0 d-flex flex-row align-items-center justify-content-center"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span class="material-symbols-rounded"> close </span>
+                </div>
+              </div>
+              <div
+                class="modal-body d-flex flex-column justify-content-center align-items-center px-3 py-2 gap-2"
+              >
+                <form class="w-100">
+                  <div>
+                    <input
+                      type="text"
+                      class="border-radius-16 form-control px-4 py-3"
+                      placeholder="game name"
+                      id="modal-game-code-input"
+                      required
+                    />
+                  </div>
+                </form>
+                <div
+                  class="btn-menu w-100 d-flex align-items-center justify-content-center p-3"
+                  id="modal-game-code-btn"
+                >
+                  <p class="text-md-start mx-3 my-0">입장하기</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div
           class="offcanvas offcanvas-end border-0"
@@ -776,10 +821,11 @@
         </div>
         <div class="d-flex flex-row gap-3 w-100 px-4 pb-3">
           <div
+            id="gameroom-code-copy-btn"
             class="w-100 card card—-transparent d-flex flex-row align-items-center gap-4 p-3"
           >
             <span class="material-symbols-rounded"> content_copy </span>
-            <span class="medium"> ABCODEF </span>
+            <span id="gameroom-code" class="medium"> GAME_CODE </span>
           </div>
           <div
             id="game-start"

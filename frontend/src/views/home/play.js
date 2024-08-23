@@ -12,12 +12,20 @@ const myScore = document.getElementById("game-my-score");
 
 const gameCreateBtn = document.getElementById("gameroom-list-game-create-btn");
 const gameCreateModalBtn = document.getElementById("modal-game-create-btn");
-const gameNameInput = document.getElementById("modal-game-create-name-input");
+var gameNameInput = document.getElementById("modal-game-create-name-input");
+
 const gameCodeBtn = document.getElementById("gameroom-list-game-code-btn");
+const gameCodeModalBtn = document.getElementById("modal-game-code-btn");
+var gameCodeInput = document.getElementById("modal-game-code-input");
+
+const gameCodeCopyBtn = document.getElementById("gameroom-code-copy-btn");
+const codeText = document.getElementById("gameroom-code");
 
 export async function setPlay() {
   gameCreateBtn.addEventListener("click", () => {
+    const nickname = localStorage.getItem("nickname");
     ModalManager.show("modal-game-create");
+    gameNameInput.value = nickname ? `${nickname}의 방` : "바로 시작";
   });
 
   gameCreateModalBtn.addEventListener("click", async () => {
@@ -36,7 +44,6 @@ export async function setPlay() {
       case HTTPCODE.OK:
       case HTTPCODE.CREATED:
         const data = await response.json();
-        ModalManager.hide("modal-game-create");
         updateGameroom(data.id);
         navigateTo("app-gameroom");
         break;
@@ -44,9 +51,48 @@ export async function setPlay() {
       default:
         break;
     }
+    gameNameInput.value = "";
   });
 
-  gameCodeBtn.addEventListener("click", () => {});
+  gameCodeBtn.addEventListener("click", () => {
+    ModalManager.show("modal-game-code");
+  });
+
+  gameCodeModalBtn.addEventListener("click", async () => {
+    const gameCode = gameCodeInput.value;
+
+    if (!gameCode) {
+      alert("게임 코드를 입력하십시오");
+      return;
+    } else if (gameCode.length != 6) {
+      alert("게임 코드는 6자리입니다.");
+      return;
+    }
+
+    const response = await Api.post(`${API_CONFIG.ENDPOINT.GAMES}enter/`, {
+      code: gameCode,
+    });
+
+    if (!response.ok) {
+      return;
+    }
+
+    const data = await response.json();
+    updateGameroom(data.id);
+    navigateTo("app-gameroom");
+    gameCodeInput = "";
+  });
+
+  gameCodeCopyBtn.addEventListener("click", () => {
+    navigator.clipboard
+      .writeText(codeText.textContent)
+      .then(() => {
+        alert("copy success " + codeText.textContent);
+      })
+      .catch((err) => {
+        console.error("fail");
+      });
+  });
 }
 
 export async function updatePlay() {
@@ -106,6 +152,7 @@ export async function updateGameroom(gameId) {
   }
   const data = await response.json();
   gameName.textContent = data.name;
+  codeText.textContent = data.code;
 
   gameMemberList.innerHTML = "";
   gameMemberList.innerHTML += `

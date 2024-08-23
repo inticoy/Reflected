@@ -1,3 +1,5 @@
+import { updatePlay } from "../views/home/play.js";
+
 const navbar = document.getElementById("navbar");
 const navLogoutBtn = document.getElementById("nav-logout-btn");
 const navBackBtn = document.getElementById("nav-back-btn");
@@ -64,8 +66,13 @@ export function setAppSwitch() {
   window.addEventListener("popstate", function (event) {
     if (event.state && event.state.page) {
       navigateTo(event.state.page, false);
+      updateApp(event.state.page);
     } else {
       navigateTo("app-home", false);
     }
   });
+}
+
+export function updateApp(targetApp) {
+  if (targetApp === "app-play") updatePlay();
 }

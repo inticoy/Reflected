@@ -1,5 +1,7 @@
-import { HTTPCODE, API_CONFIG } from "/src/utils/variables.js";
 import Api from "/src/utils/api.js";
+import ModalManager from "/src/components/modal/modal.js";
+
+import { HTTPCODE, API_CONFIG } from "/src/utils/variables.js";
 import { showToast } from "/src/components/toast/toast.js";
 
 var friendOffcanvas = new bootstrap.Offcanvas(
@@ -108,16 +110,9 @@ export async function updateFriendRequests() {
 }
 
 export function setAddFriend() {
-  let addFriendModal = new bootstrap.Modal(
-    document.getElementById("modal-friend-request"),
-    {
-      backdrop: false,
-    }
-  );
-
   const friendRequest = document.getElementById("friends-add");
   friendRequest.addEventListener("click", function () {
-    addFriendModal.show();
+    ModalManager.show("modal-friend-request");
   });
 
   const friendRequestSubmitButton = document.getElementById(
@@ -172,7 +167,7 @@ export function setAddFriend() {
         );
         break;
     }
-    addFriendModal.hide();
+    ModalManager.hide("modal-friend-request");
     friendOffcanvas.hide();
   });
 

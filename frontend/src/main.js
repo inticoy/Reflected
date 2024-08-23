@@ -1,13 +1,16 @@
 import { setAppSwitch, navigateTo } from "/src/utils/display.js";
 import { login, setLogin } from "/src/utils/login.js";
 import { setHome, updateHome } from "/src/views/home.js";
+import { setPlay } from "/src/views/home/play.js";
 import { setNavbar, updateNavbar, initWebSocket } from "/src/views/navbar.js";
 
 function setApp() {
-  setLogin();
-  setHome();
-  setNavbar();
   setAppSwitch();
+
+  setLogin();
+  setNavbar();
+  setHome();
+  setPlay();
 }
 
 document.addEventListener("DOMContentLoaded", async function () {

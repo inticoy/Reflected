@@ -1,3 +1,5 @@
+import OffcanvasManager from "../components/offcanvas/offcanvas.js";
+
 import {
   updateNotifications,
   alertNotifications,
@@ -9,7 +11,21 @@ import {
 } from "./navbar/friends/friendRequests.js";
 import { setChats, updateChats, alertChats } from "./navbar/chats.js";
 
+const notificationsBtn = document.getElementById("nav-notifications-btn");
+const friendsBtn = document.getElementById("nav-friends-btn");
+const chatsBtn = document.getElementById("nav-chats-btn");
+
 export function setNavbar() {
+  notificationsBtn.addEventListener("click", () => {
+    OffcanvasManager.show("offcanvas-notifications");
+  });
+  friendsBtn.addEventListener("click", () => {
+    OffcanvasManager.show("offcanvas-friends");
+  });
+  chatsBtn.addEventListener("click", () => {
+    OffcanvasManager.show("offcanvas-chats");
+  });
+
   setLogout();
   setBack();
   setFriends();

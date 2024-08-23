@@ -1,12 +1,53 @@
-import { navigateTo } from "../../utils/display.js";
 import Api from "/src/utils/api.js";
-import { API_CONFIG } from "/src/utils/variables.js";
+import ModalManager from "/src/components/modal/modal.js";
+
+import { navigateTo } from "../../utils/display.js";
+import { HTTPCODE, API_CONFIG } from "/src/utils/variables.js";
 
 const ball = document.getElementById("ball");
 const opponentSlider = document.getElementById("opponent-slider");
 const mySlider = document.getElementById("my-slider");
 const opponentScore = document.getElementById("game-opponent-score");
 const myScore = document.getElementById("game-my-score");
+
+const gameCreateBtn = document.getElementById("gameroom-list-game-create-btn");
+const gameCreateModalBtn = document.getElementById("modal-game-create-btn");
+const gameNameInput = document.getElementById("modal-game-create-name-input");
+const gameCodeBtn = document.getElementById("gameroom-list-game-code-btn");
+
+export async function setPlay() {
+  gameCreateBtn.addEventListener("click", () => {
+    ModalManager.show("modal-game-create");
+  });
+
+  gameCreateModalBtn.addEventListener("click", async () => {
+    const gameName = gameNameInput.value;
+
+    if (!gameName) {
+      alert("방 제목을 입력하십시오.");
+      return;
+    }
+
+    const response = await Api.post(`${API_CONFIG.ENDPOINT.GAMES}`, {
+      name: gameName,
+    });
+
+    switch (response.status) {
+      case HTTPCODE.OK:
+      case HTTPCODE.CREATED:
+        const data = await response.json();
+        ModalManager.hide("modal-game-create");
+        updateGameroom(data.id);
+        navigateTo("app-gameroom");
+        break;
+
+      default:
+        break;
+    }
+  });
+
+  gameCodeBtn.addEventListener("click", () => {});
+}
 
 export async function updatePlay() {
   const gameList = document.getElementById("gameroom-list");

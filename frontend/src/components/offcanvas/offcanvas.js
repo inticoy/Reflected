@@ -1,3 +1,5 @@
+import ModalManager from "../modal/modal.js";
+
 class OffcanvasManager {
   static offcanvases = {};
 
@@ -14,24 +16,33 @@ class OffcanvasManager {
   }
 
   static show(id) {
-    const offcanvas = OffcanvasManager.getOffcanvasInstance(id);
+    this.hideAll();
+    ModalManager.hideAll();
+
+    const offcanvas = this.getOffcanvasInstance(id);
     if (offcanvas) {
       offcanvas.show();
     }
   }
 
   static hide(id) {
-    const offcanvas = OffcanvasManager.getOffcanvasInstance(id);
+    const offcanvas = this.getOffcanvasInstance(id);
     if (offcanvas) {
       offcanvas.hide();
     }
   }
 
+  static hideAll() {
+    Object.keys(this.offcanvases).forEach((id) => {
+      this.hide(id);
+    });
+  }
+
   static getOffcanvasInstance(id) {
-    if (!OffcanvasManager.offcanvases[id]) {
-      OffcanvasManager.offcanvases[id] = OffcanvasManager.initOffcanvas(id);
+    if (!this.offcanvases[id]) {
+      this.offcanvases[id] = this.initOffcanvas(id);
     }
-    return OffcanvasManager.offcanvases[id];
+    return this.offcanvases[id];
   }
 }
 

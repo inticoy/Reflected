@@ -3,6 +3,7 @@ import ModalManager from "/src/components/modal/modal.js";
 
 import { navigateTo } from "../../utils/display.js";
 import { HTTPCODE, API_CONFIG } from "/src/utils/variables.js";
+import { showToast } from "../../components/toast/toast.js";
 
 const ball = document.getElementById("ball");
 const opponentSlider = document.getElementById("opponent-slider");
@@ -74,10 +75,13 @@ export async function setPlay() {
     });
 
     if (!response.ok) {
+      ModalManager.hide("modal-game-code");
+      showToast("close", "red", "방 들어가기를 실패했습니다.");
       return;
     }
 
     const data = await response.json();
+    ModalManager.hide("modal-game-code");
     updateGameroom(data.id);
     navigateTo("app-gameroom");
     gameCodeInput = "";

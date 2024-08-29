@@ -94,10 +94,15 @@ export function alertChats() {
 
   socket.onmessage = function (event) {
     const data = JSON.parse(event.data);
-    if (data.object == "chat") {
-      updateChat(data.chatroom_id);
-    } else if (data.object == "chatroom") {
-      updateChats();
+    console.log(data);
+    if (data.type === "ping") {
+      socket.send(JSON.stringify({ type: "pong" }));
+    } else {
+      if (data.object === "chat") {
+        updateChat(data.chatroom_id);
+      } else if (data.object === "chatroom") {
+        updateChats();
+      }
     }
   };
 

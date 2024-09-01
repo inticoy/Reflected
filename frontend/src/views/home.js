@@ -1,12 +1,13 @@
 import Api from "/src/utils/api.js";
 import { navigateTo } from "/src/utils/display.js";
 import { showToast } from "/src/components/toast/toast.js";
+import { updateSinglePlay } from "/src/views/home/single.js";
 import { updatePlay } from "/src/views/home/play.js";
 import { updateMypage } from "/src/views/home/mypage.js";
-import { setPlayButtons } from "./home/play.js";
 
 const buttons = [
-  { id: "home-play-btn", handler: handlePlayButtonClick },
+  { id: "home-single-play-btn", handler: handleSinglePlayButtonClick },
+  { id: "home-multi-play-btn", handler: handleMultiPlayButtonClick },
   {
     id: "home-collections-btn",
     handler: handleCollectionsButtonClick,
@@ -22,8 +23,12 @@ const buttons = [
   },
 ];
 
-function handlePlayButtonClick() {
-  setPlayButtons();
+function handleSinglePlayButtonClick() {
+  updateSinglePlay();
+  navigateTo("app-single-play");
+}
+
+function handleMultiPlayButtonClick() {
   updatePlay();
   navigateTo("app-play");
 }

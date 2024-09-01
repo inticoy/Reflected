@@ -22,7 +22,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def disconnect(self, close_code):
         if self.user.is_authenticated:
             await self.channel_layer.group_discard(self.group_name, self.channel_name)
-            await self.ping_task.cancel()
+            self.ping_task.cancel()
             logger.info(f"WebSocket disconnected: {self.user.nickname}")
 
     async def receive(self, text_data):

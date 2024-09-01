@@ -1,3 +1,5 @@
+import SocketManager from "./socket.js";
+
 import { updatePlay } from "../views/home/play.js";
 
 const navbar = document.getElementById("navbar");
@@ -67,8 +69,10 @@ export function setAppSwitch() {
     if (event.state && event.state.page) {
       navigateTo(event.state.page, false);
       updateApp(event.state.page);
+      SocketManager.endSession();
     } else {
       navigateTo("app-home", false);
+      SocketManager.endSession();
     }
   });
 }

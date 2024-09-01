@@ -14,6 +14,7 @@ django_asgi_app = get_asgi_application()
 from django.urls import re_path, path
 
 from chat.consumers import ChatConsumer
+from game.consumers import SingleGameConsumer, GameConsumer
 from notification.consumers import NotificationConsumer
 
 from .middleware import TokenAuthMiddleware
@@ -26,6 +27,8 @@ application = ProtocolTypeRouter(
                 [
                     path("ws/notifications/", NotificationConsumer.as_asgi()),
                     path("ws/chats/", ChatConsumer.as_asgi()),
+                    path("ws/games/single/", SingleGameConsumer.as_asgi()),
+                    path("ws/games/multi/<int:game_id>/", GameConsumer.as_asgi()),
                 ]
             )
         ),

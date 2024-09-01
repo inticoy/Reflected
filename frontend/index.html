@@ -747,9 +747,15 @@
         >
           <div
             class="btn-menu w-100 d-flex align-items-center justify-content-center mt-3 p-3"
-            id="home-play-btn"
+            id="home-single-play-btn"
           >
-            <p class="text-md-start mx-3 my-0">PLAY</p>
+            <p class="text-md-start mx-3 my-0">SINGLE PLAY</p>
+          </div>
+          <div
+            class="btn-menu w-100 d-flex align-items-center justify-content-center mt-3 p-3"
+            id="home-multi-play-btn"
+          >
+            <p class="text-md-start mx-3 my-0">MUTLI PLAY</p>
           </div>
           <div
             class="btn-menu w-100 d-flex align-items-center justify-content-center mt-3 p-3"
@@ -772,6 +778,183 @@
         </div>
       </div>
     </div>
+    <div id="app-single-play" class="container-app mx-auto d-none">
+      <div
+        class="d-flex flex-column align-items-center justify-content-between h-100 gap-3"
+        style="padding-top: 88px"
+      >
+        <div class="d-flex flex-column px-4 py-3 gap-3 w-100">
+          <div class="w-100 p-4">
+            <span class="large">Single Play</span>
+          </div>
+          <div class="d-flex flex-column gap-1">
+            <div class="list d-flex flex-row justify-content-between px-3 py-2">
+              <div
+                class="d-flex flex-row gap-3 align-middle align-items-center"
+              >
+                <span class="yellow material-symbols-rounded"> kid_star </span>
+                <div
+                  class="d-flex flex-column gap-2 justify-content-between align-items-start"
+                >
+                  <span class="medium">Me</span>
+                  <span class="small"> GOLD </span>
+                </div>
+              </div>
+              <div class="d-none flex-column gap-1 align-items-end">
+                <div
+                  type="button"
+                  class="btn-navbar rounded-circle p-0 d-flex flex-row align-items-center justify-content-center"
+                >
+                  <span class="material-symbols-rounded"> close </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex flex-row gap-3 w-100 px-4 pb-3">
+          <div
+            class="w-100 card card—-transparent d-flex flex-row align-items-center gap-4 p-3"
+          >
+            <span class="material-symbols-rounded"> content_copy </span>
+            <span class="medium"> GAME_CODE </span>
+          </div>
+          <div
+            id="single-game-start"
+            class="w-100 card card-—transparent d-flex flex-row align-items-center gap-4 p-3"
+          >
+            <span id="single-game-start-icon" class="material-symbols-rounded">
+              videogame_asset
+            </span>
+            <span id="single-game-start-text" class="medium"> 시작하기 </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="app-single-game" class="container-app mx-auto d-none">
+      <div
+        id="game-contents"
+        class="d-flex flex-column align-items-center justify-content-between h-100 gap-3"
+        style="padding-top: 56px"
+      >
+        <div
+          class="w-100 px-4 d-flex flex-row align-items-center justify-content-between"
+        >
+          <div class="w-100 d-flex flex-row justify-content-center">
+            <span class="medium">AI</span>
+          </div>
+          <div
+            class="w-100 d-flex flex-row align-items-center justify-content-between"
+            style="
+              background: linear-gradient(
+                103.8deg,
+                #f4501d 0.36%,
+                #c98069 50.36%,
+                #3b6bc0 50.36%,
+                #0c3887 100.36%
+              );
+              border-radius: 12px;
+            "
+          >
+            <div
+              class="w-100 d-flex flex-row align-items-center justify-content-center"
+            >
+              <span id="single-game-opponent-score" class="x-large">0</span>
+            </div>
+            <div
+              class="w-100 d-flex flex-row align-items-center justify-content-center"
+            >
+              <span id="single-game-my-score" class="x-large">0</span>
+            </div>
+          </div>
+          <div
+            id="single-game-my-nickname"
+            class="w-100 d-flex flex-row justify-content-center"
+          >
+            <span class="medium">jukim2</span>
+          </div>
+        </div>
+        <div class="w-100 px-4">
+          <div
+            id="single-game-container"
+            class="position-relative"
+            style="
+              border-radius: 12px;
+              aspect-ratio: 2/3;
+              height: auto;
+              /* outline: 4px solid grey; */
+              background: black;
+            "
+          >
+            <div
+              id="single-game-opponent-slider"
+              class="position-absolute"
+              style="
+                background-color: white;
+                width: 20%;
+                height: 3%;
+                left: 10%;
+                top: 5%;
+                border-radius: 2px;
+                transform: translate(-50%, -50%);
+              "
+            ></div>
+            <div
+              id="single-game-my-slider"
+              class="position-absolute"
+              style="
+                background-color: white;
+                width: 20%;
+                height: 3%;
+                left: 90%;
+                top: 95%;
+                border-radius: 2px;
+                transform: translate(-50%, -50%);
+              "
+            ></div>
+            <div
+              id="single-game-ball"
+              class="position-absolute"
+              style="
+                background-color: white;
+                width: 4.5%;
+                height: 3%;
+                left: 50%;
+                top: 50%;
+                border-radius: 2px;
+                transform: translate(-50%, -50%);
+              "
+            ></div>
+            <div
+              class="position-absolute"
+              style="
+                background-image: linear-gradient(
+                  90deg,
+                  rgba(255, 255, 255, 150) 50%,
+                  rgba(0, 0, 0, 0) 0%
+                );
+                background-size: 16px; /* 점선의 크기 조정 */
+                width: 100%;
+                height: 1%;
+                left: 50%;
+                top: 50%;
+                border-radius: 2px;
+                transform: translate(-50%, -50%);
+              "
+            ></div>
+          </div>
+        </div>
+        <div class="w-100 d-flex flex-row align-items-center gap-3 px-4 pb-3">
+          <div class="w-100 card card--transparent align-items-center">
+            <span class="material-symbols-rounded"> arrow_back_2 </span>
+          </div>
+          <div class="w-100 card card--transparent align-items-center">
+            <span class="material-symbols-rounded"> play_arrow </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="app-play" class="container-app mx-auto d-none">
       <div
         id="play-contents"
@@ -831,8 +1014,10 @@
             id="game-start"
             class="w-100 card card-—transparent d-flex flex-row align-items-center gap-4 p-3"
           >
-            <span class="material-symbols-rounded"> videogame_asset </span>
-            <span class="medium"> 시작하기 </span>
+            <span id="game-start-icon" class="material-symbols-rounded">
+              videogame_asset
+            </span>
+            <span id="game-start-text" class="medium"> 시작하기 </span>
           </div>
         </div>
       </div>

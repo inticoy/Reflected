@@ -4,7 +4,7 @@
 python manage.py makemigrations
 
 # if django column does not exist error raises
-# python manage.py migrate [model name] zero
+# python manage.py migrate [app name] zero
 
 python manage.py migrate
 

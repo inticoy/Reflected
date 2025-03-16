@@ -8,8 +8,7 @@
 
 ## Introduction
 
-**Reflected**는 소셜 로그인, 친구 추가, 채팅, 실시간 알림 기능을 갖춘 풀스택 웹 프로젝트입니다.
-Django 백엔드, Vanilla JS + Bootstrap 프론트엔드를 사용하고, Docker Compose로 PostgreSQL, Django, Nginx를 컨테이너화하여 서비스 환경을 재현했습니다.
+**Reflected**는 소셜 로그인, 친구 추가, 채팅, 실시간 알림 기능을 갖춘 Full Stack 웹 프로젝트입니다. Django 백엔드, Vanilla JS + Bootstrap 프론트엔드를 사용하고, Docker Compose로 PostgreSQL, Django, Nginx를 컨테이너화하여 서비스 환경을 재현했습니다.
 
 <img width="1490" alt="Screenshot 2025-03-16 at 18 25 39" src="https://github.com/user-attachments/assets/09aa674b-9cd5-4f99-9f96-fdb0783386ac" />
 
@@ -23,6 +22,7 @@ Django 백엔드, Vanilla JS + Bootstrap 프론트엔드를 사용하고, Docker
 
 ## My Contribution
 
+기획부터 디자인, 프론트엔드, 백엔드, 도커 환경까지 모두 개발한 개인 프로젝트입니다.
 - **Design**: Figma를 활용한 UI 설계 (Figma Design Link)
 - **Front-end**: Vanilla JS와 Bootstrap을 사용한 SPA 웹 애플리케이션 개발
 - **Back-end**: Django와 PostgreSQL 기반의 RESTful API 서버 개발

@@ -3,7 +3,7 @@
 </h1>
 
 <h3 align="center">
-  소셜 로그인, JWT 인증, 실시간 채팅·알림 기능을 포함한 풀스택 토이 프로젝트
+  풀스택 Pong 웹게임 애플리케이션
 </h3>
 
 ## Introduction

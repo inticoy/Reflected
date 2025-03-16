@@ -3,7 +3,7 @@
 </h1>
 
 <h3 align="center">
-  풀스택 Pong 웹게임 애플리케이션
+  풀스택 Pong 게임 웹 애플리케이션
 </h3>
 
 ## Introduction
